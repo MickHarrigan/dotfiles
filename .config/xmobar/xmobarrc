@@ -1,0 +1,25 @@
+Config { font = "xft:SauceCodePro Nerd Font Mono:regular:size=12:antialias=true:hinting=true"
+       , additionalFonts = [ "xft:Mononoki Nerd Font:pixelsize=14:antialias=true:hinting=true" ]
+       , bgColor = "#002b36"
+       , fgColor = "#839496"
+       , position = Top 
+       , lowerOnStart = True
+			 , iconRoot = "/home/mick/.xmonad/xpm/" -- default: "."
+       , commands = [ 
+					  Run Weather "KBWI" ["--template", "Outside: <tempF>F","-L","50","-H","85","--normal","#859900","--high","#dc322f","--low","#268bd2"] 36000
+                    , Run Network "enp0s3" ["-L","0","-H","32","--normal","#859900","--high","#dc322f"] 10
+                    , Run Cpu ["-L","3","-H","50","--normal","#859900","--high","#dc322f"] 10
+                    , Run Memory ["-t","Mem: <usedratio>%"] 10
+                    , Run Swap [] 10
+                    , Run Com "uname" ["-s","-r"] "" 36000
+    		    	, Run Date "%a %m/%d/%y %I:%M%p" "date" 300
+		    		, Run Com "/usr/local/bin/pacupdate" [] "pacupdate" 36000
+		    		, Run Com "/usr/local/bin/GPUTemp" [] "GPUTemp" 10
+		    		, Run MultiCoreTemp [ "-t", "Temp: <avg>C | <avgpc>%" ] 10
+		    		, Run UnsafeStdinReader
+                    , Run StdinReader
+                    ]
+       , sepChar = "%"
+       , alignSep = "}{"
+       , template = "<action=`alacritty -e htop`> <icon=Haskell.xpm/></action> %UnsafeStdinReader%}{ <action=`alacritty -e sudo pacman -Syu`>%pacupdate%</action>|%cpu%|%memory%|%KBWI%|<fc=#dc322f>%date%</fc>"
+       }
